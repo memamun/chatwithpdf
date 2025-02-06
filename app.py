@@ -153,6 +153,11 @@ def apply_typography_styles():
             line-height: 1.6;
             color: #4B5563; /* Secondary color for body text */
         }
+
+        /* Hide Deploy button */
+        .stDeployButton {
+            display: none !important;
+        }
         </style>
     """, unsafe_allow_html=True)
 
@@ -174,6 +179,22 @@ def apply_web_fonts():
         <style>
         body {
             font-family: 'Roboto', sans-serif;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+def hide_deploy_button():
+    st.markdown("""
+        <style>
+        /* Hide Deploy button and related elements */
+        [data-testid="stAppDeployButton"],
+        .stDeployButton,
+        [data-testid="stAppDeployButton"] button,
+        div[class*="stAppDeployButton"],
+        .st-emotion-cache-15wzwg4,
+        button[data-testid="stBaseButton-header"] {
+            display: none !important;
+            visibility: hidden !important;
         }
         </style>
     """, unsafe_allow_html=True)
@@ -255,6 +276,7 @@ def main():
     for message in st.session_state.messages:
         display_chat_message(message)
     st.markdown('</div>', unsafe_allow_html=True)
+    
 
     # Chat input
     if prompt := st.chat_input("Ask about your PDF..."):
@@ -286,4 +308,5 @@ if __name__ == "__main__":
     apply_typography_styles()
     apply_input_styles()
     apply_spacing()
+    hide_deploy_button()
     main()
